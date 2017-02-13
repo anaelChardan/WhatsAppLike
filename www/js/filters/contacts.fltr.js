@@ -4,16 +4,12 @@
     angular.module('whatsapp.filters').filter('ContactsFltr', ContactsFltr);
 
     function ContactsFltr() {
-        console.log("coucoucnanan")
-        return (items, scope) => {
-            console.log("coucou filter");
-            let query = scope.model.queryContact;
-
-            if (query === undefined) {
-                return true;
+        return (items, queryContact) => {
+            if (queryContact === undefined) {
+                return items;
             }
-
-            return contact.firstName.toLowerCase().indexOf(query.toLowerCase) > -1 || contact.lastName.toLowerCase().indexOf(query.toLowerCase) > -1;
+            
+            return items.filter(contact => contact.firstName.toLowerCase().indexOf(queryContact.toLowerCase()) > -1 || contact.lastName.toLowerCase().indexOf(queryContact.toLowerCase()) > -1);
         };
     }
 })();
