@@ -2,11 +2,14 @@
   'use_strict'
   angular.module('whatsapp.services').factory('MessagesSrv', MessagesSrv)
 
-  function MessagesSrv(ContactsSrv) {
+  function MessagesSrv(ContactsSrv, UuidSrv, AuthSrv) {
     // Might use a resource here that returns a JSON array
 
     // Some fake testing data
-    var messages = [{
+
+    var messages = [];
+    
+    messages = [{
       "_id": 1,
       "chat_id": 1,
       "sender_id": "589b2866cd807e41dbc48d70",
@@ -28,7 +31,18 @@
     });
 
     return {
-      get: (chatId) => transformMessage().filter(e => e.chat_id == chatId)
+      get: (chatId) => transformMessage().filter(e => e.chat_id == chatId),
+      add: (message, chatId) => {
+        let newMessage = {
+          "_id": UuidSrv.getUUID(),
+          "chat_id": chatId,
+          "sender_id": AuthSrv.connectedUser(),
+          "message": message,
+          "sentDate": Date.now()
+        };
+
+        messages.push(newMessage);
+      }
     };
   }
 })();

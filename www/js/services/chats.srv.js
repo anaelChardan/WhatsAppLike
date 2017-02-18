@@ -2,8 +2,8 @@
   'use_strict'
   angular.module('whatsapp.services').factory('ChatsSrv', ChatsSrv)
 
-  function ChatsSrv(MessagesSrv) {
-    var chats = [{
+  function ChatsSrv(MessagesSrv, UuidSrv) {
+    chats = [{
       "_id": "0",
       "name": 'Cours de Js',
       "description": "une super description 1",
@@ -38,7 +38,19 @@
 
     return {
       all: () => transformChats(),
-      get: (chatId) => transformChats().find(e => e._id == chatId)
-    };
+      get: (chatId) => transformChats().find(e => e._id == chatId),
+      add: (name, description) => {
+        let newChat = {
+          "_id": UuidSrv.getUUID(),
+          "name": name,
+          "description": description,
+          "creationDate": Date.now()
+        };
+
+        chats.push(newChat);
+        
+        return newChat;
+      }
+    }
   }
 })()

@@ -1,20 +1,23 @@
 <ion-view id="new-chat" view-title="Créer un chat">
   <ion-content has-bouncing="true" class="has-header has-footer">
-    <div class="list card">
-      <label class="item item-input">
-                <input ng-model="nom" type="text" name="nom" placeholder="Nom" class="item"/>
-            </label>
+    <form name="form" novalidate>
+      <label>Name:
+      <input type="text" ng-model="name" name="name" required="" />
+    </label>
+      <div ng-show="form.$submitted">
+        <div ng-show="form.name.$error.required">Name is required.</div>
+      </div>
+      <br />
 
-      <label class="item item-input">
-                <input ng-model="description" type="text" name="description" placeholder="Description" class="item"/>
-            </label>
 
-    </div>
-
-    <div class="text-center">
-      <button ng-click="creerClick(nom, description)" class="button button-block button-stable">
-              Créer
-      </button>
-    </div>
+      <label>Description:
+      <input type="text" ng-model="description" name="description" required="" />
+    </label>
+      <div ng-show="form.$submitted">
+        <span ng-show="form.description.$error.required">Description is required.</span>
+      </div>
+      <br />
+      <input type="submit" ng-click="form.$valid && createChat(name, description)" value="Créer" />
+    </form>
   </ion-content>
 </ion-view>
