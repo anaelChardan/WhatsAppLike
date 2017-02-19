@@ -1,14 +1,25 @@
 (() => {
     'use_strict'
-    
+
     angular.module('whatsapp.services').factory('AuthSrv', AuthSrv)
 
-    function AuthSrv() {
-        var connectedUserId = "589b286646a9a7d3a224deaf"
+    function AuthSrv($q, ContactsSrv, $state) {
+        var connectedUserId = null;
 
         return {
-            connectedUser: function () {
-                return connectedUserId;
+            connectedUser: () => connectedUserId,
+            $requireAuth: () => {
+                var deferred = $q.defer();
+                (null === connectedUserId) ? deferred.reject(new Error("AUTH_REQUIRED")) : deferred.resolve();
+                return deferred.promise;
+            },
+            authenticate: (email, password) => {
+                var contact = ContactsSrv.getByAuthInfo(email, password);
+                if (undefined === contact) {
+                    return false;
+                }
+                connectedUserId = contact["_id"];
+                $state.go("tab.chats");
             }
         };
     }
