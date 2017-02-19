@@ -4,11 +4,10 @@
     angular.module('whatsapp.directives').directive('myInputDir', myInputDir)
 
     function myInputDir() {
-        console.log("COUCOU");
         return {
             restrict: 'E',
             scope: {
-                model: '=',
+                modelName: '=',
                 placeholder: '@',
                 form: '='
             },
