@@ -31,8 +31,8 @@
     }];
 
     var transformChats = () => chats.map(e => {
-      let messages = MessagesSrv.get(e._id)
-      e.lastMessage = messages[0] === undefined ? "Pas de message" : messages[0]
+      let lastMessage = MessagesSrv.get(e._id)[0];
+      e.lastMessage = lastMessage === undefined ? "Pas de message" : lastMessage;
       return e
     });
 
@@ -44,7 +44,7 @@
           "_id": UuidSrv.getUUID(),
           "name": name,
           "description": description,
-          "creationDate": Date.now()
+          "creationDate": new Date().toISOString()
         };
 
         chats.push(newChat);

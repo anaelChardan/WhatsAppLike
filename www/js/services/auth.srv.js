@@ -4,7 +4,7 @@
     angular.module('whatsapp.services').factory('AuthSrv', AuthSrv)
 
     function AuthSrv($q, ContactsSrv, $state) {
-        var connectedUserId = null;
+        var connectedUserId = "1234";
 
         return {
             connectedUser: () => connectedUserId,
@@ -21,6 +21,7 @@
                 connectedUserId = contact["_id"];
                 $state.go("tab.chats");
             }
+            // signup: (email, password, )
         };
     }
 })()

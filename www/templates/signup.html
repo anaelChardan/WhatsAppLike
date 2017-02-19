@@ -1,15 +1,11 @@
 <ion-view view-title="Connexion">
     <ion-content>
         <form name="form" novalidate>
-            <div ng-show="tried">
-                Vos informations ne sont pas bonnes.
-            </div>
-            <my-input-dir model="email" placeholder="Email" form="form" />
-            <!--<div class="list card">
+            <div class="list card">
                 <label class="item item-input"><input ng-model="email" type="text" name="email" placeholder="Email" class="item" required=""/></label>
                 <div ng-show="form.$submitted">
                     <div ng-show="form.email.$error.required">Email is required.</div>
-                </div>-->
+                </div>
                 <label class="item item-input">
           <input ng-model="password" type="password" name="password" placeholder="Password" class="item" required=""/>
         </label>
@@ -17,6 +13,7 @@
                     <div ng-show="form.password.$error.required">Password is required.</div>
                 </div>
             </div>
+            
             <div class="text-center list card">
                 <input class="button button-block button-stable" type="submit" ng-click="form.$valid && signin(email, password)" value="Se connecter"
                 />
@@ -29,3 +26,10 @@
         </div>
     </ion-content>
 </ion-view>
+
+"_id": "589b2866cd807e41dbc48d70",
+        "email": "crystalmack@crustatia.com",
+        "phone": "+1 (998) 456-2857",
+        "firstName": "Misty",
+        "lastName": "Booker",
+        "password": "PLOP"

@@ -19,7 +19,6 @@
       "_id": 1,
       "chat_id": 1,
       "sender_id": "hoho",
-      // "sender_id": "589b286646a9a7d3a224deaf",
       "message": "Un super message 2",
       "sentDate": "2016-02-13T09:10:56.045Z"
     }];
@@ -31,14 +30,14 @@
     });
 
     return {
-      get: (chatId) => transformMessage().filter(e => e.chat_id == chatId),
+      get: (chatId) => transformMessage().filter(e => e.chat_id == chatId).sort((a1, a2) => new Date(a2.sentDate) - new Date(a1.sentDate)),
       add: (message, chatId) => {
         let newMessage = {
           "_id": UuidSrv.getUUID(),
           "chat_id": chatId,
           "sender_id": AuthSrv.connectedUser(),
           "message": message,
-          "sentDate": Date.now()
+          "sentDate": new Date().toISOString()
         };
 
         messages.push(newMessage);
