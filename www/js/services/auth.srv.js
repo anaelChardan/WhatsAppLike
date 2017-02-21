@@ -4,10 +4,11 @@
     angular.module('whatsapp.services').factory('AuthSrv', AuthSrv)
 
     function AuthSrv($q, ContactsSrv, $state) {
-        var connectedUserId = "1234";
+        var connectedUserId = null;
 
         return {
-            connectedUser: () => connectedUserId,
+            connectedUserId: () => connectedUserId,
+            connectedUser: () => ContactsSrv.get(connectedUserId),
             $requireAuth: () => {
                 var deferred = $q.defer();
                 (null === connectedUserId) ? deferred.reject(new Error("AUTH_REQUIRED")) : deferred.resolve();
@@ -20,8 +21,11 @@
                 }
                 connectedUserId = contact["_id"];
                 $state.go("tab.chats");
+            },
+            logout: () => {
+                connectedUserId = null;
+                $state.go("signin");
             }
-            // signup: (email, password, )
         };
     }
 })()

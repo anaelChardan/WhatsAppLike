@@ -3,9 +3,12 @@
   angular.module('whatsapp.services').factory('ContactsSrv', ContactsSrv)
   // Might use a resource here that returns a JSON array
 
-  function ContactsSrv() {
+  function ContactsSrv(UuidSrv) {
     // Some fake testing data
-    var contacts = [
+
+    var contacts = [];
+    
+    contacts = [
       {
         "_id": "589b286616f7c6a07180b3f6",
         "email": "junemadden@crustatia.com",
@@ -59,7 +62,25 @@
     return {
       all: () => contacts,
       get: (contactId) => contacts.find(e => e["_id"] === contactId),
-      getByAuthInfo: (email, password) => contacts.find(e => e["email"] === email && e["password"] === password)
+      getByAuthInfo: (email, password) => contacts.find(e => e["email"] === email && e["password"] === password),
+      add: (email, password, firstName, lastName, phone) => {
+        if (undefined !== contacts.find(e => e["email"] === email && e["password"] === password)) {
+          return false;
+        }
+
+        let newContact = {
+          "_id": UuidSrv.getUUID(),
+          "email": email,
+          "password": password,
+          "firstName": firstName,
+          "lastName": lastName,
+          "phone": phone
+        };
+
+        contacts.push(newContact);
+
+        return true;
+      }
     };
   }
 })()

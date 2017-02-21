@@ -5,7 +5,7 @@
 
   function ChatDetailCtrl($scope, $stateParams, ChatsSrv, MessagesSrv, AuthSrv) {
     let chatId = $stateParams.chatId;
-    $scope.user = AuthSrv.connectedUser();
+    $scope.userId = AuthSrv.connectedUserId();
     $scope.chat = ChatsSrv.get(chatId);
     $scope.messages = MessagesSrv.get(chatId);
     $scope.sendMessage = (message) => {

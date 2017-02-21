@@ -4,16 +4,25 @@
             <div ng-show="tried">
                 Vos informations ne sont pas bonnes.
             </div>
-            <my-input-dir model="email" placeholder="Email" form="form" />
-            <my-input-dir model="password" placeholder="Password" form="form" />
+            <label class="item item-input">
+                <input ng-model="email" type="text" name="email" placeholder="Email" class="item" required=""/>
+            </label>
+            <div ng-show="form.$submitted">
+                <div ng-show="form.email.$error.required">Email is required.</div>
+            </div>
+            <label class="item item-input">
+                <input ng-model="password" type="text" name="password" placeholder="Password" class="item" required=""/>
+            </label>
+            <div ng-show="form.$submitted">
+                <div ng-show="form.password.$error.required">Password is required.</div>
+            </div>
             <div class="text-center list card">
-                <input class="button button-block button-stable" type="submit" ng-click="form.$valid && signin(email, password)" value="Se connecter"/>
+                <input class="button button-block button-stable" type="submit" ng-click="form.$valid && signin(email, password)" value="Se connecter"
+                />
             </div>
         </form>
         <div class="text-center">
-            <a href="#/signup">
-      Créer un compte
-    </a>
+            <a href="#/signup">Créer un compte</a>
         </div>
     </ion-content>
 </ion-view>

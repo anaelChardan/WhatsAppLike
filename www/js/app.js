@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('whatsapp', ['ionic', 'whatsapp.controllers', 'whatsapp.services', 'whatsapp.filters', 'whatsapp.directives'])
 
-  .run(function ($ionicPlatform) {
+  .run(function ($ionicPlatform, $rootScope, $state) {
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -20,7 +20,16 @@ angular.module('whatsapp', ['ionic', 'whatsapp.controllers', 'whatsapp.services'
         // org.apache.cordova.statusbar required
         StatusBar.styleDefault();
       }
+
+      $rootScope.$on("$stateChangeError", function (event, toState, toParams, fromState, fromParams, error) {
+        console.log("coucou");
+        if (error === "AUTH_REQUIRED") {
+          $state.go("signin");
+        }
+      });
     });
+
+    
   })
 
   .config(function ($stateProvider, $urlRouterProvider) {
@@ -86,6 +95,24 @@ angular.module('whatsapp', ['ionic', 'whatsapp.controllers', 'whatsapp.services'
             }
           }
         }
+      })
+      .state('tab.parameters', {
+        url: '/parameters',
+        views: {
+          "tab-parameters": {
+            templateUrl: 'templates/tab-parameters.html',
+            controller: 'ParametersCtrl',
+            resolve: {
+              "currentAuth": ["AuthSrv", (AuthSrv) => AuthSrv.$requireAuth()]
+            }
+          }
+        }
+
+      })
+      .state('signup', {
+        url: '/signup',
+        templateUrl: 'templates/signup.html',
+        controller: 'SignupCtrl'
       })
       .state('signin', {
         url: '/signin',
