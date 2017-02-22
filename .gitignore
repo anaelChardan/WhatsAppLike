@@ -4,3 +4,4 @@ www/lib/
 node_modules/
 platforms/
 plugins/
+!www/lib/.gitkeep
