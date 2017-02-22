@@ -4,10 +4,10 @@
   </ion-nav-buttons>
   <ion-content>
     <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats | orderBy:['lastMessage.sentDate', 'creationDate']"
-        type="item-text-wrap" href="#/tab/chats/{{chat._id}}">
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats | orderBy:['lastMessageDate', 'creationDate']"
+        type="item-text-wrap" href="#/tab/chats/{{chat.$id}}">
         <h2>{{chat.name}}</h2>
-        <p>{{chat.lastMessage.message}}</p>
+        <p>{{chat.lastMessage}}</p>
         <i class="icon ion-chevron-right icon-accessory"></i>
 
         <ion-option-button class="button-assertive" ng-click="remove(chat)">

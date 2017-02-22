@@ -4,18 +4,20 @@
             <div ng-show="tried">
                 Le couple email/password existe déjà.
             </div>
-            <label class="item item-input">
-                <input ng-model="email" type="text" name="email" placeholder="Email" class="item" required=""/>
-            </label>
             <div ng-show="form.$submitted">
                 <div ng-show="form.email.$error.required">Email is required.</div>
             </div>
             <label class="item item-input">
-                <input ng-model="password" type="password" name="password" placeholder="Password" class="item" required=""/>
+                <input ng-model="email" type="text" name="email" placeholder="Email" class="item" required=""/>
             </label>
+            
             <div ng-show="form.$submitted">
-                <div ng-show="form.password.$error.required">Password is required.</div>
+                <div ng-show="form.password.$error.required">Password is required and with minimum 6 characters.</div>
             </div>
+            <label class="item item-input">
+                <input ng-model="password" type="password" name="password" placeholder="Password (6 characters minimum)" class="item" required=""/>
+            </label>
+            
             <label class="item item-input">
                 <input ng-model="firstName" type="text" name="firstName" placeholder="First Name" class="item" required=""/>
             </label>
@@ -28,14 +30,8 @@
             <div ng-show="form.$submitted">
                 <div ng-show="form.lastName.$error.required">Last Name is required.</div>
             </div>
-            <label class="item item-input">
-                <input ng-model="phone" type="text" name="phone" placeholder="Phone" class="item" required=""/>
-            </label>
-            <div ng-show="form.$submitted">
-                <div ng-show="form.phone.$error.required">Phone is required.</div>
-            </div>
             <div class="text-center list card">
-                <input class="button button-block button-stable" type="submit" ng-click="form.$valid && signup(email, password, firstName, lastName, phone)" value="S'inscrire"/>
+                <input class="button button-block button-stable" ng-disabled="password.length < 6" type="submit" ng-click="form.$valid && signup(email, password, firstName, lastName)" value="S'inscrire"/>
             </div>
         </form>
     </ion-content>

@@ -1,10 +1,4 @@
-// Ionic Starter App
 
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'starter.services' is found in services.js
-// 'starter.controllers' is found in controllers.js
 angular.module('whatsapp', ['ionic', 'whatsapp.controllers', 'whatsapp.services', 'whatsapp.filters', 'firebase'])
 
   .run(function ($ionicPlatform, $rootScope, $state) {
@@ -20,17 +14,16 @@ angular.module('whatsapp', ['ionic', 'whatsapp.controllers', 'whatsapp.services'
         // org.apache.cordova.statusbar required
         StatusBar.styleDefault();
       }
-
-      $rootScope.$on("$stateChangeError", function (event, toState, toParams, fromState, fromParams, error) {
-        console.log("coucou");
-        if (error === "AUTH_REQUIRED") {
-          $state.go("signin");
-        }
-      });
     });
-
-    
   })
+
+  .run(["$rootScope", "$state", function ($rootScope, $state) {
+    $rootScope.$on("$stateChangeError", function (event, toState, toParams, fromState, fromParams, error) {
+      if (error === "AUTH_REQUIRED") {
+        $state.go('signin');
+      }
+    })
+  }])
 
   .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -43,7 +36,10 @@ angular.module('whatsapp', ['ionic', 'whatsapp.controllers', 'whatsapp.services'
       .state('tab', {
         url: '/tab',
         abstract: true,
-        templateUrl: 'templates/tabs.html'
+        templateUrl: 'templates/tabs.html',
+        resolve: {
+          'authentification': (AuthSrv) => AuthSrv.isConnected()
+        }
       })
 
       // Each tab has its own nav history stack:
@@ -53,10 +49,7 @@ angular.module('whatsapp', ['ionic', 'whatsapp.controllers', 'whatsapp.services'
         views: {
           'tab-contacts': {
             templateUrl: 'templates/tab-contacts.html',
-            controller: 'ContactsCtrl',
-            resolve: {
-              "currentAuth": ["AuthSrv", (AuthSrv) => AuthSrv.$requireAuth()]
-            }
+            controller: 'ContactsCtrl'
           }
         }
       })
@@ -65,10 +58,7 @@ angular.module('whatsapp', ['ionic', 'whatsapp.controllers', 'whatsapp.services'
         views: {
           'tab-chats': {
             templateUrl: 'templates/tab-chats.html',
-            controller: 'ChatsCtrl',
-            resolve: {
-              "currentAuth": ["AuthSrv", (AuthSrv) => AuthSrv.$requireAuth()]
-            }
+            controller: 'ChatsCtrl'
           }
         }
       })
@@ -77,10 +67,7 @@ angular.module('whatsapp', ['ionic', 'whatsapp.controllers', 'whatsapp.services'
         views: {
           'tab-chats': {
             templateUrl: 'templates/chat-new.html',
-            controller: 'NewChatCtrl',
-            resolve: {
-              "currentAuth": ["AuthSrv", (AuthSrv) => AuthSrv.$requireAuth()]
-            }
+            controller: 'NewChatCtrl'
           }
         }
       })
@@ -89,10 +76,7 @@ angular.module('whatsapp', ['ionic', 'whatsapp.controllers', 'whatsapp.services'
         views: {
           'tab-chats': {
             templateUrl: 'templates/chat-detail.html',
-            controller: 'ChatDetailCtrl',
-            resolve: {
-              "currentAuth": ["AuthSrv", (AuthSrv) => AuthSrv.$requireAuth()]
-            }
+            controller: 'ChatDetailCtrl'
           }
         }
       })
@@ -101,10 +85,7 @@ angular.module('whatsapp', ['ionic', 'whatsapp.controllers', 'whatsapp.services'
         views: {
           "tab-parameters": {
             templateUrl: 'templates/tab-parameters.html',
-            controller: 'ParametersCtrl',
-            resolve: {
-              "currentAuth": ["AuthSrv", (AuthSrv) => AuthSrv.$requireAuth()]
-            }
+            controller: 'ParametersCtrl'
           }
         }
 

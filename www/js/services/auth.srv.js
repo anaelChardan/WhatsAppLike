@@ -3,29 +3,22 @@
 
     angular.module('whatsapp.services').factory('AuthSrv', AuthSrv)
 
-    function AuthSrv($q, ContactsSrv, $state) {
-        var connectedUserId = null;
+    function AuthSrv($firebaseAuth, ContactsSrv, $state) {
+        var authManager = $firebaseAuth();
 
         return {
-            connectedUserId: () => connectedUserId,
-            connectedUser: () => ContactsSrv.get(connectedUserId),
-            $requireAuth: () => {
-                var deferred = $q.defer();
-                (null === connectedUserId) ? deferred.reject(new Error("AUTH_REQUIRED")) : deferred.resolve();
-                return deferred.promise;
-            },
-            authenticate: (email, password) => {
-                var contact = ContactsSrv.getByAuthInfo(email, password);
-                if (undefined === contact) {
-                    return false;
+            signup: (firstName, lastName, email, password) => authManager.$createUserWithEmailAndPassword(email, password).then((user) => ContactsSrv.add(user.uid, firstName, lastName, email)),
+            authenticate: (email, password) => authManager.$signInWithEmailAndPassword(email, password),
+            user: () => {
+                var user = authManager.$getAuth();
+                return {
+                    id: user.uid,
+                    email: user.email,
                 }
-                connectedUserId = contact["_id"];
-                $state.go("tab.chats");
             },
-            logout: () => {
-                connectedUserId = null;
-                $state.go("signin");
-            }
+            realUser: () => authManager.$getAuth(),
+            signout: () => authManager.$signOut(),
+            isConnected: () => authManager.$requireSignIn(),
         };
     }
 })()
