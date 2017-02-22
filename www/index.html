@@ -30,6 +30,21 @@
   <!-- cordova script (this will be a 404 during development) -->
   <script src="cordova.js"></script>
 
+  <!-- External libs -->
+  <script src="lib/angularfire/dist/angularfire.js"></script>
+  <script src="lib/firebase/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyCh4NuE81vO4awR_HuiG9zqLBfAR7Do36c",
+      authDomain: "whatsapplike-26d82.firebaseapp.com",
+      databaseURL: "https://whatsapplike-26d82.firebaseio.com",
+      storageBucket: "whatsapplike-26d82.appspot.com",
+      messagingSenderId: "802761458744"
+    };
+    firebase.initializeApp(config);
+  </script>
+
   <!-- your app's js -->
   <script src="js/app.js"></script>
 

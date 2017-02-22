@@ -2,7 +2,23 @@
   'use_strict'
   angular.module('whatsapp.services').factory('ChatsSrv', ChatsSrv)
 
-  function ChatsSrv(MessagesSrv, UuidSrv) {
+  function ChatsSrv(MessagesSrv, UuidSrv, $firebaseArray, $firebaseObject) {
+    var ref = firebase.database().ref();
+
+    var chats = () => ref.child('chats');
+
+    console.log($firebaseArray(ref.child('chats')));
+
+    console.log(firebase);
+
+    console.log("coucou");
+
+    $firebaseArray(ref.child('chats')).$add({
+      "name": "tesT",
+      "description": "PLOP",
+      "creationDate": new Date().toISOString()
+    });
+
     chats = [{
       "_id": "0",
       "name": 'Cours de Js',

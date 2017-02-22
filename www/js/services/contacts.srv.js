@@ -56,6 +56,14 @@
         "firstName": "Estes",
         "lastName": "Riggs",
         "password": "RIGGS"
+      },
+      {
+        "_id": "589b286616f7c6a07180b3f6678",
+        "email": "anael.chardan@gmail.com",
+        "phone": "0123456789",
+        "firstName": "anael",
+        "lastName": "chardan",
+        "password": "anael"
       }
     ];
 
